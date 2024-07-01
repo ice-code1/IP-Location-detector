@@ -13,12 +13,9 @@ app.use(requestIp.mw());
 class UserControllers {
     async Hello(req, res) {
         const visitorName = req.query.visitor_name;
-        const clientIp = req.clientIp || req.ip;
+        const clientIp = req.clientIp.substring(7) || req.ip.substring(7);
 
-        if (clientIp.startsWith('::ffff:')) {
-            clientIp = clientIp.substring(7);
-        }
-
+        
         // Get location based on IP
         const geo = geoip.lookup(clientIp);
         const city = geo && geo.city ? geo.city : 'Unknown';
