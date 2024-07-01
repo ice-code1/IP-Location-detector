@@ -21,11 +21,18 @@ class UserControllers {
         const geo = geoip.lookup(strippedIp);
         const city = geo && geo.city ? geo.city : 'Unknown';
 
-        // Get weather data
-        const weatherApiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${config.weatherApiKey}`;
-        const response = await fetch(weatherApiUrl);
-        const weatherData = await response.json();
-        const temperature = weatherData.main ? weatherData.main.temp : 'Unknown';
+        let temperature = 'Unknown';
+        if (city !== 'Unknown') {
+            const weatherApiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${config.weatherApiKey}`;
+            try {
+                const response = await fetch(weatherApiUrl);
+                const weatherData = await response.json();
+                temperature = weatherData.main ? weatherData.main.temp : 'Unknown';
+                console.log(`Weather data: ${JSON.stringify(weatherData)}`);
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+            }
+        }
 
         console.log(`Client IP: ${clientIp}`);
         console.log(`Geo Data: ${JSON.stringify(geo)}`);
