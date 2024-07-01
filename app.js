@@ -6,9 +6,11 @@ dotenv.config();
 
 const app = express();
 
-app.use('/api/users', userRoutes);
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => {
     res.send('api deployed');
