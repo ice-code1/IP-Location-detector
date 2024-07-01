@@ -34,11 +34,7 @@ coverage/
 *.tmp
 *.temp
 
-# Directory for storing package-lock files (if using npm 7+)
-package-lock.json
 
-# Yarn lock file
-yarn.lock
 
-# NPM lock file (if using npm 6 or below)
-package-lock.json
+
+
