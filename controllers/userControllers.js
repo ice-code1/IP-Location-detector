@@ -13,11 +13,12 @@ app.use(requestIp.mw());
 class UserControllers {
     async Hello(req, res) {
         const visitorName = req.query.visitor_name;
-        const clientIp = req.clientIp.substring(7) || req.ip.substring(7);
+        const clientIp = req.clientIp || req.ip;
 
-        
+        const strippedIp = clientIp.replace(/^::ffff:/, '');
+
         // Get location based on IP
-        const geo = geoip.lookup(clientIp);
+        const geo = geoip.lookup(strippedIp);
         const city = geo && geo.city ? geo.city : 'Unknown';
 
         // Get weather data
