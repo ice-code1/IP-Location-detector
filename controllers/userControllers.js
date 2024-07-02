@@ -20,8 +20,8 @@ class UserControllers {
         const strippedIp = clientIp.substring(7);
         
         // Get location based on IP
-        const geo = geoip.lookup(strippedIp);
-        const city = geo && geo.city ? geo.city : 'Unknown';
+        const geo = geoip.lookup(clientIp);
+        const city = geo.city || 'Unknown';
 
         let temperature = 'Unknown';
         if (city !== 'Unknown') {
