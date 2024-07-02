@@ -14,12 +14,13 @@ app.use(requestIp.mw());
 class UserControllers {
     async Hello(req, res) {
         const visitorName = req.query.visitor_name;
-        const clientIp = (req.headers['x-forwarded-for'] || req.socket.remoteAddress) ;
+        const clientIp = String(req.headers['x-forwarded-for'] || req.socket.remoteAddress)  ;
+        console.log(req.headers['x-forwarded-for'])
 
-       // const strippedIp = clientIp.replace(/^::ffff:/, '');
-
+        const strippedIp = clientIp.substring(7);
+        
         // Get location based on IP
-        const geo = geoip.lookup(clientIp);
+        const geo = geoip.lookup(strippedIp);
         const city = geo && geo.city ? geo.city : 'Unknown';
 
         let temperature = 'Unknown';
